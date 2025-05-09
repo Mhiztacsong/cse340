@@ -4,3 +4,196 @@
 *:after {
   box-sizing: border-box;
 }
+
+
+/* Base Reset */
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+  color: #222;
+  padding: 0rem;
+}
+
+/* Wrapper */
+#wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Header */
+header {
+  background-color: #003049;
+  color: #fff;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+header a:hover {
+  text-decoration: underline;
+}
+
+/* Navigation */
+nav {
+  background-color: #eaeaea;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: space-evenly;
+  padding: 1rem;
+  margin: 0;
+}
+
+nav li a {
+  color: #003049;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 1rem 2rem;
+}
+
+nav li a:hover {
+  background-color: rgb(135, 184, 104);
+}
+
+/* Main */
+main {
+  padding: 1rem;
+}
+
+main h1 {
+  margin-bottom: .5rem;
+  font-size: 2rem;
+}
+
+.parts ul {
+  margin-left: 0;
+  padding-left: 20px;
+}
+
+.parts ul li {
+  padding: .5rem;
+}
+
+#car p {
+  padding: 0rem;
+}
+
+#car {
+  display: flex; 
+  flex-wrap: wrap;
+}
+
+#car > section {
+  background-color: rgba(145, 139, 139, 0.37);
+  border-radius: 1rem;
+  margin: .5rem;
+  padding: 1rem;
+}
+
+.parts {
+  display: grid;
+  grid-template-columns: .5fr 1fr;
+}
+
+section {
+  margin-top: 1rem;
+}
+
+section h2 {
+  font-size: 1.5rem;
+  margin-bottom: .5rem;
+}
+
+/* Vehicle image */
+main img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Upgrades */
+figure {
+  text-align: center;
+}
+
+#figures {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0rem;
+  gap: 0rem;
+  justify-content: center;
+  border: 1px solid rgb(172, 168, 168);
+}
+
+figure img {
+  width: 100px;
+  height: 100px;
+  padding: 1rem 1.5rem;
+  border: 1px solid black;
+  background-color: aqua;
+}
+
+/* Button */
+button {
+  display: block;
+  background-color: #d62828;
+  color: #fff;
+  border: none; 
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 0.7rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #b51f1f;
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #003049;
+  color: #fff;
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 960px) {
+  .parts {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  #car > section {
+    width: 100%;
+  }
+
+  #figures {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  nav li a {
+    color: #003049;
+    text-decoration: none;
+    font-weight: 500;
+    padding: .5rem .5rem;
+  }
+} 
