@@ -260,12 +260,16 @@ footer {
 }
 
 
+.vehicle-detail {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr;
+}
 
-
-
-
-
-
+footer a {
+  color: yellow;
+  text-decoration: none;
+}
 
 /* Responsive Design */
 @media (max-width: 960px) {
@@ -282,5 +286,10 @@ footer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  .vehicle-detail {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 } 

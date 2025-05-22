@@ -19,4 +19,25 @@ invCont.buildByClassificationId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Build inventory by inventory Id
+ * ************************** */
+invCont.buildByInventoryId = async function (req, res, next) {
+  const invId = req.params.inv_id
+  const vehicle = await invModel.getInventoryById(invId)
+
+  const html = await utilities.buildVehicleDetailHTML(vehicle)
+  let nav = await utilities.getNav()
+  
+  res.render("./inventory/detail", {
+    title: `${vehicle.inv_year} ${vehicle.inv_make} ${vehicle.inv_model}`,
+    nav,
+    html,
+  })
+}
+
+invCont.triggerIntentionalError = async function (req, res, next) {
+  throw new Error("This is an intentional server error for testing.")
+}
+
 module.exports = invCont

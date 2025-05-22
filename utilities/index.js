@@ -60,6 +60,34 @@ Util.buildClassificationGrid = async function(data){
   return grid
 }
 
+
+
+
+Util.buildVehicleDetailHTML = function(vehicle) {
+  const formattedPrice = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD"
+  }).format(vehicle.inv_price);
+
+  const miles = vehicle.inv_miles.toLocaleString()
+
+  return `
+    <div class="vehicle-detail">
+      <div>
+        <img src="${vehicle.inv_image}" alt="Image of ${vehicle.inv_make} ${vehicle.inv_model}">
+      </div>
+      <div>
+        <h2>${vehicle.inv_make} ${vehicle.inv_model} Details</h2>
+        <p><strong>Price: ${formattedPrice}</strong></p>
+        <p><strong>Description:</strong> ${vehicle.inv_description}</p>
+        <p><strong>Color:</strong> ${vehicle.inv_color}</p>
+        <strong>Mileage:</strong> ${miles} miles
+      </div>
+    </div>
+  `;
+}
+
+
 /* **************************************
 * Middleware for handling Errors
 * Wrap other function in this for
