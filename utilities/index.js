@@ -61,7 +61,9 @@ Util.buildClassificationGrid = async function(data){
 }
 
 
-
+/* **************************************
+* Build the vehicle HTML detail view
+* ************************************ */
 
 Util.buildVehicleDetailHTML = function(vehicle) {
   const formattedPrice = new Intl.NumberFormat("en-US", {

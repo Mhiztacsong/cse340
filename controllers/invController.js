@@ -36,6 +36,10 @@ invCont.buildByInventoryId = async function (req, res, next) {
   })
 }
 
+/* ***************************
+ *  Trigger intentional error
+ * ************************** */
+
 invCont.triggerIntentionalError = async function (req, res, next) {
   throw new Error("This is an intentional server error for testing.")
 }
