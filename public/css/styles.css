@@ -361,9 +361,14 @@ input:required:invalid {
   border-right: 7px solid red;
 }
 
-p {
+#text {
   display: flex;
   justify-content: center;
+}
+
+#text a {
+  margin-left: 5px;
+  text-decoration: none;
 }
 
 form button:hover {
