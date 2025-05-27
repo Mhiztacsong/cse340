@@ -16,6 +16,7 @@ const accountRoute = require("./routes/accountRoute")
 const utilities = require("./utilities/index")
 const session = require("express-session")
 const pool = require('./database/')
+const bodyParser = require("body-parser")
 
 
 /* ***********************
@@ -39,6 +40,9 @@ app.use(function(req, res, next){
   next()
 })
 
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application
+
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -55,7 +59,7 @@ app.use(static)
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 app.use("/inv", inventoryRoute)
-app.use("/account", require("./routes/accountRoute"))
+app.use("/account", accountRoute)
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })

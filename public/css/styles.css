@@ -334,7 +334,6 @@ form input[type="email"],
 form input[type="password"] {
   width: 100%;
   padding: 0.75rem;
-  margin-top: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
@@ -352,6 +351,14 @@ form button {
   border: none;
   border-radius: 100px;
   cursor: pointer;
+}
+
+input:required:valid {
+  border-right: 7px solid green;
+}
+
+input:required:invalid {
+  border-right: 7px solid red;
 }
 
 p {
