@@ -19,11 +19,11 @@ async function buildLogin(req, res, next) {
 **************************/
 async function buildRegister(req, res, next) {
     let nav = await utilities.getNav()
-    res.render("account/Register", {
+    res.render("account/register", {
         title: "Register",
         nav,
-        message: req.flash("message"),
-        errors: null
+        errors: null,
+        message: null
     })
 }
 

@@ -4,16 +4,15 @@
 <% if (message) { %>
   <div class="flash-message">
     <p><%= message %></p>
-    <% if (errors) { %>
-      <div class="validation-errors">
-        <ul class="notice">
-          <% errors.array().forEach(error => { %>
-            <li><%= error.msg %></li>
-          <% }) %>
-        </ul>
-      </div>
-    <% } %>
   </div>
+<% } %>
+
+<% if (errors) { %>
+    <ul class="notice">
+      <% errors.forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
 <% } %>
 
 <form action="/account/register" method="post">
