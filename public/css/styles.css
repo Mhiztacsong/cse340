@@ -301,10 +301,13 @@ footer a {
   border-radius: 100px;
 }
 
-.flash-message {
+.flash-message,
+.notice {
   max-width: 400px;
   margin: 1em auto;
   padding: 1em;
+  text-decoration: none;
+  list-style: none;
   background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
