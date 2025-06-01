@@ -36,6 +36,48 @@ invCont.buildByInventoryId = async function (req, res, next) {
   })
 }
 
+
+// Management View
+invCont.buildManagement = async function (req, res) {
+  const nav = await utilities.getNav()
+  let message = req.flash("notice")
+  res.render("inventory/management", {
+    title: "Inventory Management",
+    nav,
+    errors: null,
+    message
+  })
+}
+
+
+// View to display add-classification form
+invCont.buildAddClassification = async function (req, res) {
+  const nav = await utilities.getNav()
+  res.render("inventory/add-classification", {
+    title: "Add Classification",
+    nav,
+    errors: null,
+    message: req.flash("notice")
+  })
+}
+
+// Handle new classification submission
+invCont.addClassification = async function (req, res) {
+  const { classification_name } = req.body
+  // const nav = await utilities.getNav()
+
+  const result = await invModel.addClassification(classification_name)
+
+  if (result) {
+    req.flash("notice", "Classification successfully added.");
+    res.redirect("/inv/");
+  } else {
+    req.flash("notice", "Error adding classification.");
+    res.redirect("/inv/add-classification");
+  }
+}
+
+
 /* ***************************
  *  Trigger intentional error
  * ************************** */
