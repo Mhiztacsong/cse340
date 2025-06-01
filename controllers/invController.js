@@ -78,6 +78,65 @@ invCont.addClassification = async function (req, res) {
 }
 
 
+invCont.buildAddInventory = async function (req, res) {
+  const nav = await utilities.getNav();
+  const classificationSelect = await utilities.buildClassificationList();
+
+  res.render("inventory/add-inventory", {
+    title: "Add New Inventory",
+    nav,
+    classificationSelect,
+    errors: null,
+    message: req.flash("message"),
+    inv_make: "",
+    inv_model: "",
+    inv_year: "",
+    inv_description: "",
+    inv_image: "/images/vehicles/no-image.png",
+    inv_thumbnail: "/images/vehicles/no-image-tn.png",
+    inv_price: "",
+    inv_miles: "",
+    inv_color: "",
+  });
+}
+
+invCont.addInventory = async function (req, res) {
+  // const nav = await utilities.getNav();
+  const {
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+  } = req.body;
+
+  const result = await invModel.addInventory(
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color
+  );
+
+  if (result) {
+    req.flash("notice", "New inventory item added successfully!");
+    res.redirect("/inv/");
+  } else {
+    req.flash("notice", "Failed to add new inventory item.")
+    res.redirect("inv/add-inventory");
+  }
+}
+
 /* ***************************
  *  Trigger intentional error
  * ************************** */
