@@ -38,8 +38,8 @@ validate.inventoryRules = () => {
 
     body("inv_make")
       .trim()
-      .isLength({ min: 3 })
-      .withMessage("Make must be at least 3 characters long."),
+      .isLength({ min: 2 })
+      .withMessage("Make must be at least 2 characters long."),
 
     body("inv_model")
       .trim()
@@ -111,5 +111,52 @@ validate.checkInventoryData = async (req, res, next) => {
   }
   next();
 };
+
+
+/* ***************************
+ * Check update data and return errors or continue to edit view
+ * ************************** */
+validate.checkUpdateData = async (req, res, next) => {
+  const {
+    inv_id,
+    classification_id,
+    inv_make,
+    inv_model,
+    inv_year,
+    inv_description,
+    inv_image,
+    inv_thumbnail,
+    inv_price,
+    inv_miles,
+    inv_color,
+  } = req.body;
+
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav();
+    const classificationSelect = await utilities.buildClassificationList(classification_id);
+    res.render("inventory/edit-inventory", {
+      title: `Edit ${inv_make} ${inv_model}`,
+      nav,
+      classificationSelect,
+      errors: errors.array(),
+      message: null,
+      inv_id,
+      classification_id,
+      inv_make,
+      inv_model,
+      inv_year,
+      inv_description,
+      inv_image,
+      inv_thumbnail,
+      inv_price,
+      inv_miles,
+      inv_color,
+    });
+    return;
+  }
+  next();
+};
+
 
 module.exports = validate
