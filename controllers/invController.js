@@ -242,6 +242,42 @@ invCont.updateInventory = async function (req, res, next) {
   }
 }
 
+// Show delete confirmation view
+invCont.showDeleteConfirmation = async function (req, res) {
+  const inv_id = parseInt(req.params.inv_id);
+  const itemData = await invModel.getInventoryById(inv_id); // Reuse your get function
+  const nav = await utilities.getNav();
+  const name = `${itemData.inv_make} ${itemData.inv_model}`;
+  
+  res.render("inventory/delete-confirm", {
+    title: `Delete ${name}`,
+    nav,
+    message: req.flash("message"),
+    errors: null,
+    inv_id,
+    inv_make: itemData.inv_make,
+    inv_model: itemData.inv_model,
+    inv_year: itemData.inv_year,
+    inv_price: itemData.inv_price
+  });
+}
+
+// Perform the actual delete
+invCont.deleteInventoryItem = async function (req, res) {
+  const inv_id = parseInt(req.body.inv_id);
+  const deleteResult = await invModel.deleteInventoryItem(inv_id);
+
+  if (deleteResult.rowCount > 0) {
+    req.flash("notice", "Inventory item successfully deleted.");
+    res.redirect("/inv/");
+  } else {
+    req.flash("notice", "Sorry, the delete failed.");
+    res.redirect(`/inv/delete/${inv_id}`);
+  }
+}
+
+
+
 /* ***************************
  *  Trigger intentional error
  * ************************** */
