@@ -490,6 +490,28 @@ form button:hover {
   color: #0056b3;
 }
 
+#tools {
+  text-align: right;
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+.user-tools {
+  margin: 0;
+  padding: 0;
+  color: white;
+}
+
+.user-tools a {
+  color: #f3db08;
+  text-decoration: none;
+  margin: 0 5px;
+}
+
+.user-tools a:hover {
+  text-decoration: underline;
+}
+
 
 /* Responsive Design */
 @media (max-width: 960px) {

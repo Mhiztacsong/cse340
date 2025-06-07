@@ -138,14 +138,48 @@ Util.checkJWTToken = (req, res, next) => {
 /* ****************************************
  *  Check Login
  * ************************************ */
- Util.checkLogin = (req, res, next) => {
-  if (res.locals.loggedin) {
-    next()
+
+Util.checkLogin = (req, res, next) => {
+  const token = req.cookies.jwt;
+  if (token) {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {  // Also use ACCESS_TOKEN_SECRET here
+      if (!err && decoded) {
+        res.locals.loggedin = true;
+        res.locals.firstname = decoded.firstname;
+        res.locals.account_type = decoded.account_type;
+      } else {
+        res.locals.loggedin = false;
+      }
+      return next();
+    });
   } else {
-    req.flash("notice", "Please log in.")
+    res.locals.loggedin = false;
+    return next();
+  }
+};
+
+Util.requireEmployeeOrAdmin = (req, res, next) => {
+  const token = req.cookies.jwt
+  if (!token) {
+    req.flash("notice", "You must be logged in to access this page.")
     return res.redirect("/account/login")
   }
- }
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    if (err) {
+      req.flash("notice", "Invalid token. Please log in again.")
+      return res.redirect("/account/login")
+    }
+
+    if (decoded.account_type === "Employee" || decoded.account_type === "Admin") {
+      next()
+    } else {
+      req.flash("notice", "You are not authorized to access this page.")
+      return res.redirect("/account/login")
+    }
+  })
+}
+
   
 /* **************************************
 * Middleware for handling Errors
