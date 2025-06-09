@@ -40,8 +40,8 @@
 <form action="/account/change-password" method="post">
     <label for="account_password">New Password</label>
     <input type="password" id="account_password" name="account_password" required
-           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[!@#\\$%\\^&\\*])[\\S]{12,}$"
-           title="At least 12 characters, with uppercase, lowercase, number, and special character.">
+       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[\S]{12,}$"
+       title="At least 12 characters, with uppercase, lowercase, number, and special character.">
 
     <input type="hidden" name="account_id" value="<%= account?.account_id %>">
     <input type="submit" value="Change Password">

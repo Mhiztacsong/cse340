@@ -181,8 +181,8 @@ validate.checkUpdateData = (req, res, next) => {
   });
 }
 
-validate.checkPasswordChangeData = (req, res, next) => {
-  body('account_password')
+validate.checkPasswordChangeData = async (req, res, next) => {
+  await body('account_password')
     .trim()
     .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])[\S]{12,}$/)
     .withMessage(
@@ -190,19 +190,17 @@ validate.checkPasswordChangeData = (req, res, next) => {
     )
     .run(req);
 
-  validationResult(req).then((result) => {
-    if (!result.isEmpty()) {
-      return res.status(400).render('account/update-account', {
-        title: 'Update Account Information',
-        nav: utilities.getNav(),
-        account: req.body,
-        errors: result.array(),
-        message: null,
-      });
-    }
-    next();
-  });
-} 
-
+  const result = validationResult(req);
+  if (!result.isEmpty()) {
+    return res.status(400).render('account/update-account', {
+      title: 'Update Account Information',
+      nav: await utilities.getNav(),  // assuming this returns a Promise
+      account: req.body,
+      errors: result.array(),
+      message: null,
+    });
+  }
+  next();
+};
 
 module.exports = validate
