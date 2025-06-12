@@ -91,8 +91,6 @@ validate.loginRules = () => {
       .normalizeEmail()
       .withMessage("A valid email is required."),
 
-
-
     body("account_password")
       .trim()
       .notEmpty()
@@ -120,16 +118,20 @@ validate.checkLoginData = async (req, res, next) => {
   next()
 }
 
-validate.updateAccountRules = () => {
-  return [
-    body("account_firstname").trim().notEmpty().withMessage("First name is required."),
-    body("account_lastname").trim().notEmpty().withMessage("Last name is required."),
-    body("account_email")
-      .trim()
-      .isEmail()
-      .withMessage("Valid email is required.")
-  ]
-} 
+validate.updateAccountRules = () => [
+  body('account_firstname')
+    .trim()
+    .notEmpty()
+    .withMessage("First name is required"),
+  body('account_lastname')
+    .trim()
+    .notEmpty()
+    .withMessage("Last name is required"),
+  body('account_email')
+    .trim()
+    .isEmail()
+    .withMessage("Valid email is required"),
+]
 
 validate.changePasswordRules = () =>  {
   return [
@@ -146,61 +148,49 @@ validate.changePasswordRules = () =>  {
   ]
 }
 
-validate.checkUpdateData = (req, res, next) => {
-  // Validation rules
-  body('account_firstname')
+validate.changePasswordRules = () => [
+  body("account_password")
     .trim()
-    .isLength({ min: 1 })
-    .withMessage('First name is required')
-    .run(req);
+    .isStrongPassword({
+      minLength: 12,
+      minLowercase: 1,
+      minUppercase: 1,
+      minNumbers: 1,
+      minSymbols: 1
+    })
+    .withMessage("Password must be at least 12 characters and include uppercase, lowercase, number, and special character.")
+];
 
-  body('account_lastname')
-    .trim()
-    .isLength({ min: 1 })
-    .withMessage('Last name is required')
-    .run(req);
 
-  body('account_email')
-    .trim()
-    .isEmail()
-    .withMessage('Valid email is required')
-    .run(req);
-
-  validationResult(req).then((result) => {
-    if (!result.isEmpty()) {
-      // There are validation errors
-      return res.status(400).render('account/update-account', {
-        title: 'Update Account Information',
-        nav: utilities.getNav(),
-        account: req.body,
-        errors: result.array(),
-        message: null,
-      });
-    }
-    next();
-  });
+validate.checkUpdateData = async (req, res, next) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav()
+    return res.status(400).render("account/update-account", {
+      title: "Update Account Information",
+      nav,
+      account: req.body,
+      errors: errors.array(),
+      message: null
+    })
+  }
+  next()
 }
 
 validate.checkPasswordChangeData = async (req, res, next) => {
-  await body('account_password')
-    .trim()
-    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$%\^&\*])[\S]{12,}$/)
-    .withMessage(
-      'Password must be at least 12 characters and contain uppercase, lowercase, number, and special character.'
-    )
-    .run(req);
-
-  const result = validationResult(req);
-  if (!result.isEmpty()) {
-    return res.status(400).render('account/update-account', {
-      title: 'Update Account Information',
-      nav: await utilities.getNav(),  // assuming this returns a Promise
-      account: req.body,
-      errors: result.array(),
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const nav = await utilities.getNav();
+    return res.status(400).render("account/update-account", {
+      title: "Update Account Information",
+      nav,
+      account: req.body, 
+      errors: errors.array(),
       message: null,
     });
   }
   next();
 };
+
 
 module.exports = validate

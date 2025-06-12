@@ -187,30 +187,36 @@ async function buildUpdateForm(req, res) {
 
 
 async function updateAccount(req, res) {
-  const { account_id, account_firstname, account_lastname, account_email } = req.body
-  const nav = await utilities.getNav()
+  const { account_id, account_firstname, account_lastname, account_email } = req.body;
+  const nav = await utilities.getNav();
+
   try {
-    const updateResult = await accountModel.updateAccount(account_id, account_firstname, account_lastname, account_email)
+    const updateResult = await accountModel.updateAccount(
+      account_id,
+      account_firstname,
+      account_lastname,
+      account_email
+    );
 
     if (updateResult) {
-      req.flash("message", "Account updated successfully.")
-      res.redirect("/account/")
+      req.flash("message", "Account updated successfully.");
+      res.redirect("/account/");
     } else {
-      errors.push({ msg: "Account update failed. Please try again." })
       res.status(500).render("account/update-account", {
         title: "Update Account Information",
         nav,
-        account: { account_id, account_firstname, account_lastname, account_email },
-        errors,
+        account: req.body,
+        errors: [{ msg: "Account update failed. Please try again." }],
         message: null,
-      })
+      });
     }
-  } catch (error) {
-    console.error(error)
-    req.flash("message", "An unexpected error occurred.")
-    res.redirect("/account/")
+  } catch (err) {
+    console.error(err);
+    req.flash("message", "An unexpected error occurred.");
+    res.redirect("/account/");
   }
 }
+
 
 async function changePassword(req, res) {
   const { account_id, account_password } = req.body
