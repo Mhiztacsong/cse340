@@ -36,7 +36,6 @@ invCont.buildByInventoryId = async function (req, res, next) {
   })
 }
 
-
 // Management View
 invCont.buildManagement = async function (req, res) {
   const nav = await utilities.getNav()
@@ -66,8 +65,6 @@ invCont.buildAddClassification = async function (req, res) {
 // Handle new classification submission
 invCont.addClassification = async function (req, res) {
   const { classification_name } = req.body
-  // const nav = await utilities.getNav()
-
   const result = await invModel.addClassification(classification_name)
 
   if (result) {
@@ -79,7 +76,7 @@ invCont.addClassification = async function (req, res) {
   }
 }
 
-
+// View to display add-inventory
 invCont.buildAddInventory = async function (req, res) {
   const nav = await utilities.getNav();
   const classificationSelect = await utilities.buildClassificationList();
