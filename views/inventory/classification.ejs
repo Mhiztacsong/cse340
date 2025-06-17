@@ -1,0 +1,13 @@
+<!-- Display the page title in an <h1> if it exists -->
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<!-- Placeholder for future flash messages -->
+<%# messages() %>
+
+<!-- main content delivery -->
+ <!-- Display the inventory grid -->
+<%- grid %>

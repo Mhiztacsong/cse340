@@ -1,0 +1,32 @@
+<!-- views/account/account-management.ejs -->
+<h1>Account Management</h1>
+
+<!-- Flash Message -->
+<% if (message) { %>
+    <p class="notice"><%= message %></p>
+<% } %>
+
+<!-- Error Message -->
+<% if (errors && errors.length > 0) { %>
+    <ul class="error">
+        <% errors.forEach(error => { %>
+            <li><%= error.msg %></li>
+        <% }); %>
+    </ul>
+<% } %>
+
+<!-- Greeting with first name -->
+<h2>Welcome <%= account_firstname %></h2>
+
+<!-- Update Account Information Link (always shown) -->
+<p>
+  <a href="/account/edit/<%= account_id %>">Update Account Information</a>
+</p>
+
+<!-- Conditionally show Inventory Management section -->
+<% if (account_type === "Employee" || account_type === "Admin") { %>
+  <h3>Inventory Management</h3>
+  <p>
+    <a href="/inv/">Go to Inventory Management</a>
+  </p>
+<% } %>

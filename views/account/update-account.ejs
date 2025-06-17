@@ -1,0 +1,48 @@
+<h1><%= title %></h1>
+
+<!-- Flash Message -->
+<% if (message) { %>
+    <p class="notice"><%= message %></p>
+<% } %>
+
+<!-- Error List -->
+<% if (errors && errors.length > 0) { %>
+    <ul class="error">
+        <% errors.forEach(error => { %>
+        <li><%= error.msg %></li>
+        <% }) %>
+    </ul>
+<% } %>
+
+<!-- Account Info Update Form -->
+<h2>Account Information</h2>
+<form action="/account/update" method="post">
+    <label for="account_firstname">First Name</label>
+    <input type="text" id="account_firstname" name="account_firstname" required
+           value="<%= account?.account_firstname || '' %>">
+
+    <label for="account_lastname">Last Name</label>
+    <input type="text" id="account_lastname" name="account_lastname" required
+           value="<%= account?.account_lastname || '' %>">
+
+    <label for="account_email">Email</label>
+    <input type="email" id="account_email" name="account_email" required
+           value="<%= account?.account_email || '' %>">
+
+    <input type="hidden" name="account_id" value="<%= account?.account_id %>">
+    <input type="submit" value="Update Account">
+</form>
+
+<!-- Password Change Form -->
+<h2>Change Password</h2>
+<p>Enter a new password to replace the current one. Passwords must be at least 12 characters and contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.</p>
+
+<form action="/account/change-password" method="post">
+    <label for="account_password">New Password</label>
+    <input type="password" id="account_password" name="account_password" required
+       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[\S]{12,}$"
+       title="At least 12 characters, with uppercase, lowercase, number, and special character.">
+
+    <input type="hidden" name="account_id" value="<%= account?.account_id %>">
+    <input type="submit" value="Change Password">
+</form>

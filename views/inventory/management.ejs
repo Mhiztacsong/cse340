@@ -1,0 +1,18 @@
+
+<h1><%= title %></h1>
+<p><%= message %></p>
+
+<ul>
+    <li><a href="/inv/add-classification">Add New Classification</a></li>
+    <li><a href="/inv/add-inventory">Add New Inventory</a></li>
+</ul>
+
+<h2>Manage Inventory</h2>
+<p>Choose a classification to see those inventory items.</p>
+<%- classificationSelect %>
+
+<table id="inventoryDisplay"></table>
+
+<noscript>JavaScript must be enabled to use this age.</noscript>
+
+<script src="../../js/inventory.js"></script>
