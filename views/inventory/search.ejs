@@ -1,0 +1,22 @@
+<form action="/inv/search" class="formie" method="POST">
+  <label for="term">Search (make or model):</label>
+  <input type="text" id="term" name="term" required>
+
+  <label for="color">Color:</label>
+  <select name="color" id="color">
+    <option value="">All</option>
+    <option value="Red">Red</option>
+    <option value="Blue">Blue</option>
+    <option value="Black">Black</option>
+    <option value="White">White</option>
+    <option value="Yellow">Yellow</option>
+  </select>
+
+  <label for="minPrice">Min Price:</label>
+  <input type="number" name="minPrice" min="0">
+
+  <label for="maxPrice">Max Price:</label>
+  <input type="number" name="maxPrice" min="0">
+
+  <button type="submit">Search</button>
+</form>

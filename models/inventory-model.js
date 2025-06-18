@@ -143,4 +143,28 @@ async function deleteInventoryItem(inv_id) {
 }
 
 
-module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById, addClassification, addInventory, updateInventory, deleteInventoryItem}
+async function searchInventory(term, color, minPrice, maxPrice) {
+  let sql = "SELECT * FROM inventory WHERE (inv_make ILIKE $1 OR inv_model ILIKE $1)"
+  const values = [`%${term}%`]
+  let i = 2
+
+  if (color) {
+    sql += ` AND inv_color = $${i++}`
+    values.push(color)
+  }
+  if (minPrice) {
+    sql += ` AND inv_price >= $${i++}`
+    values.push(minPrice)
+  }
+  if (maxPrice) {
+    sql += ` AND inv_price <= $${i++}`
+    values.push(maxPrice)
+  }
+
+  const data = await pool.query(sql, values)
+  return data.rows
+}
+
+
+
+module.exports = {getClassifications, getInventoryByClassificationId, getInventoryById, addClassification, addInventory, updateInventory, deleteInventoryItem, searchInventory}

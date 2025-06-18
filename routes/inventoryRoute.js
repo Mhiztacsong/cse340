@@ -70,4 +70,11 @@ router.post(
   "/delete",
   utilities.handleErrors(invController.deleteInventoryItem));
 
+router.get("/search", utilities.handleErrors(invController.buildSearchView))
+
+
+router.post(
+  "/search",
+  invController.searchInventory)
+
 module.exports = router;

@@ -273,6 +273,30 @@ invCont.deleteInventoryItem = async function (req, res) {
   }
 }
 
+invCont.buildSearchView = async function (req, res) {
+  const nav = await utilities.getNav()
+  res.render("inventory/search", {
+    title: "Search Inventory",
+    nav
+  })
+}
+
+
+invCont.searchInventory = async function (req, res) {
+  const { term, color, minPrice, maxPrice } = req.body
+  try {
+    const results = await invModel.searchInventory(term, color, minPrice, maxPrice)
+    const nav = await utilities.getNav()
+    res.render("inventory/search-results", {
+      title: "Search Results",
+      nav,
+      results
+    })
+  } catch (error) {
+    console.error("Search error:", error)
+    res.status(500).send("Server error while searching inventory.")
+  }
+}
 
 
 /* ***************************
